@@ -162,7 +162,7 @@ a{
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    width: 769px;  
+    width: 652px;  
     height: 136px;  
     padding-left: 24px;  /* отступ слева */
     transition: opacity 0.3s ease;
@@ -210,7 +210,7 @@ a{
 
 .hero__text-description h1 {
     font-size: 64px;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
     
 }
 .hero__text-description p {
@@ -453,9 +453,9 @@ a{
 .hero__black-bg {
     width: 100vw;
     margin-left: calc(-50vw + 50%);
-    background: linear-gradient(transparent,3%, rgba(0, 0, 0, 0.8));
-    padding: 40px 0;
-    margin-top: 60px;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 1px 0;
+    margin-top: 0px;
 }
 
 .hero__description-wrapper {
@@ -497,7 +497,7 @@ a{
 /* ===== Страница отзывов ===== */
 
 .reviews {
-    padding-top: 26px;
+    padding-top: 0px;
 }
 
 
@@ -507,9 +507,9 @@ a{
 .reviews__black-bg {
     width: 100vw;
     margin-left: calc(-50vw + 50%);
-    background: linear-gradient(transparent,25%, rgba(0, 0, 0, 1));
-    padding: 60px 0 40px 0;
-    margin-top: 0;  /* ← убираем margin-top */
+    /*background: rgba(0, 0, 0, 0.8);*/
+    padding: 0px 0 40px 0;
+      /* ← убираем margin-top */
     position: relative;
 }
 
@@ -518,7 +518,7 @@ a{
 .reviews__container {
     max-width: 1306px;
     margin-inline: auto;
-    padding: 0 20px;
+    padding: 0 0px;
 }
 
 .reviews__container h1 {
@@ -526,16 +526,19 @@ a{
     font-size: 64px;
     font-weight: 700;
     color: white;
-    margin-bottom: 20px;
+    margin-bottom: 0px;
+    margin-top: 10px;      
 }
 
 .reviews__share-text {
     font-family: 'Noto Sans', sans-serif;
     font-size: 18px;
-    font-weight: 300;
+    font-weight: 500;
     color: White;
-    margin-bottom: 50px;
+    margin-bottom: 20px;
     line-height: 1.6;
+    text-shadow: 0px 4px 20px rgba(0, 0, 0, 1);
+    margin-top: 0; 
 }
 
 .reviews__email {
@@ -569,11 +572,12 @@ a{
 }
 
 .reviews__card {
-    background-color: rgba(255, 255, 255, 0.05);
+    background-color: rgba(0, 0, 0, 0.6);
     border-radius: 15px;
     padding: 30px;
     border: 1px solid rgba(255, 255, 255, 0.08);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 60px;
 }
 
 .reviews__card:hover {
@@ -661,7 +665,7 @@ a{
     font-size: 64px;
     font-weight: 700;
     color: white;
-    margin: 0 0 40px 0;
+    margin: 0 0 10px 0;
 }
 
 /* Основная сетка: изображение слева, контент справа */
@@ -679,7 +683,7 @@ a{
 .contacts__image {
     display: block;
     width: 628px;
-    height: 488px;  /* ← ФИКСИРОВАННАЯ ВЫСОТА КАК У ПРАВОЙ КОЛОНКИ */
+    height: 515px;  /* ← ФИКСИРОВАННАЯ ВЫСОТА КАК У ПРАВОЙ КОЛОНКИ */
     object-fit: cover;  /* ← чтобы изображение не искажалось */
     border-radius: 10px;
 }
@@ -978,7 +982,7 @@ a{
     display: flex;
     gap: 28px;
     align-items: flex-start;
-    margin-bottom: 60px;
+    margin-bottom: 20px;
 }
 
 /* Левая колонка с изображением */
@@ -1086,8 +1090,7 @@ a{
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
-    width: 100%;
-    max-width: 769px;
+    width: 600px;
     height: 136px;
     padding-left: 24px;
     transition: opacity 0.3s ease;
@@ -1239,10 +1242,10 @@ a{
 .buy__text {
     display: flex;
     flex-direction: column;
-    gap: 40px;
-    margin-top: 60px;
-    padding-top: 40px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    gap: 0px;
+    margin-top: 0px;
+    padding-top: 0px;
+    /*border-top: 1px solid rgba(255, 255, 255, 0.1);*/
     text-shadow: 0px 4px 20px rgba(0, 0, 0, 1);
 }
 
@@ -1270,7 +1273,7 @@ a{
     font-weight: 400;
     color: rgba(255, 255, 255, 1);
     line-height: 1.6;
-    margin: 0 0 px 0;  /* ← РАССТОЯНИЕ МЕЖДУ СТРОКАМИ 36px */
+    margin: 0 0 20px 0;  /* ← РАССТОЯНИЕ МЕЖДУ СТРОКАМИ 36px */
 }
 
 .buy__text-payment p:last-child,
@@ -1283,7 +1286,7 @@ a{
 .buy__wholesale {
     margin-top: 0px;
     padding-top: 0px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    /*border-top: 1px solid rgba(255, 255, 255, 0.1);*/
     
 }
 
