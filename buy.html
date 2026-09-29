@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resonans - Купить</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="buy.css">
     <link rel="shortcut icon" href="images/ikonka-01.png" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,73 +30,79 @@
     </header>
 
     <main>
-        <section class="buy">
-            <div class="buy__container">
-                <h1>КУПИТЬ</h1>
-                <div class="buy__main-info">
-                    <div class="buy__main-info-image">
-                        <img src="images/Rectangle 7.png" alt="Buy Image" class="buy__image">
-                    </div>
-                    <div class="buy__main-info-right">
-                        <p class="buy__main-info-right-text">Для оформления заказа напишите<br>в Telegram: <span class="hero__text-bold">@spiderzeppelin</span></p>
-                        
-                        <!-- Блок с QR-кодом и звездочкой в одной строке -->
-                        <div class="buy__qr-wrapper">
-                            <a href="https://t.me/spiderzeppelin" target="_blank" class="buy__qr-link">
-                                <div class="buy__qr-left">
-                                    <div class="buy__main-info-right-qr">
-                                        <img src="images/qr-code tg.png" alt="QR Code" class="buy__qr-code">
-                                    </div>
-                                    <div class="buy__main-info-right-liltext">
-                                        <p>нажми или отсканируй</p>
-                                    </div>
-                                </div>
-                            </a>
-                            <div class="buy__qr-right">
-                                <img src="images/star.png" alt="Buy Image Star" class="buy__image-star">
-                            </div>
-                        </div>
-                        
-                        <a href="https://t.me/spiderzeppelin" target="_blank" class="buy__main-info-right-button">
-                            <p>4 900 руб.</p>
-                        </a>
-                    </div>
-                </div>
-                
-                <div class="buy__text">
-                    <!-- ОПЛАТА -->
-                    <div class="buy__text-payment">
-                        <h2>ОПЛАТА</h2>
-                        <p>Оплата осуществляется по СБП или банковской картой.</p>
-                    </div>
-                    
-                    <!-- ДОСТАВКА -->
-                    <div class="buy__text-delivery">
-                        <h2>ДОСТАВКА</h2>
-                        <p>Отправка осуществляется в течение 3 рабочих дней после подтверждения оплаты.<br>
-                        Доступны следующие способы доставки:</p>
-                        <ul class="buy__features-list">
-                            <li><strong>Яндекс Доставка;</strong></li>
-                            <li><strong>Ozon Доставка;</strong></li>
-                            <li><strong>СДЭК;</strong></li>
-                            <li><strong>Почта России.</strong></li>
-                        </ul>
-                        <p>Стоимость доставки оплачивается отдельно и рассчитывается индивидуально<br>
-                        в зависимости от региона и выбранного способа доставки.</p>
-                        <p>Для жителей Санкт-Петербурга возможно личное получение по предварительной<br>
-                        договорённости.</p>
-                    </div>
-                
+        <section class="by-container">
+            <h1 class="by-title">КУПИТЬ</h1>
 
-                    <!-- ОПТОВЫЕ ЗАКАЗЫ -->
-                    <div class="buy__wholesale">
-                        <h2>ОПТОВЫЕ ЗАКАЗЫ</h2>
-                        <p>Игра станет отличным подарком для друзей, коллег и близких.<br>
-                        Она подходит для совместного досуга, легко вписывается в корпоративные мероприятия<br>
-                        и станет оригинальным подарком для сотрудников или целого коллектива.</p>
-                        <p>Доступно оформление заказов в большом количестве. Условия, стоимость и сроки<br>
-                        обсуждаются индивидуально.</p>
+            <!-- Ряд 1: игра -->
+            <div class="by-row">
+                <img src="images/Rectangle 7.png" alt="Игра «Резонанс»" class="by-photo by-photo--main">
+
+                <div class="by-col by-col--order">
+                    <p class="by-text">Для оформления заказа напишите<br>в Telegram: <span class="by-bold">@spiderzeppelin</span></p>
+
+                    <div class="by-qr-row">
+                        <a href="https://t.me/spiderzeppelin" target="_blank" class="by-qr">
+                            <img src="images/qr-code tg.png" alt="QR-код: Telegram" class="by-qr__img">
+                            <span class="by-qr__caption">нажми или отсканируй</span>
+                        </a>
+                        <img src="images/star.png" alt="" class="by-star">
                     </div>
+
+                    <a href="https://t.me/spiderzeppelin" target="_blank" class="by-price by-buy">
+                        <span class="by-price__value">4 900 руб.</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Ряд 2: камни -->
+            <div class="by-row by-row--second">
+                <div class="by-col by-col--stone">
+                    <p class="by-text">
+                        Запомни не только песню, но и чувство.<br>
+                        Возьми камень во время прослушивания<br>
+                        и сохрани в нём эмоцию момента.<br>
+                        Теперь у этой песни есть физическая память.
+                    </p>
+                    <p class="by-text">
+                        Каждый камень — свой музыкальный жанр.<br>
+                        Найди тот, что звучит как ты.<br>
+                        - 1 штука — 790 ₽<br>
+                        - 3 штуки — 1 990 ₽
+                    </p>
+
+                    <a href="https://t.me/spiderzeppelin" target="_blank" class="by-price by-stone-price by-buy">
+                        <span class="by-price__value">590 руб.</span>
+                        <span class="by-stone-price__note">*при покупке игры<br>“Резонанс”</span>
+                    </a>
+                </div>
+
+                <img src="images/Rectangle 8.png" alt="Игра «Резонанс» с камнями" class="by-photo">
+            </div>
+
+            <!-- Оплата / доставка / опт -->
+            <div class="by-info">
+                <div class="by-info__section">
+                    <h2 class="by-info__title">ОПЛАТА</h2>
+                    <p class="by-text">Оплата осуществляется по СБП или банковской картой.</p>
+                </div>
+
+                <div class="by-info__section">
+                    <h2 class="by-info__title">ДОСТАВКА</h2>
+                    <p class="by-text">Ответим, уточним адрес и удобный способ доставки.<br>Отправляем в течение 3 рабочих дней.</p>
+                    <ul class="by-list">
+                        <li>Яндекс Доставка;</li>
+                        <li>Ozon Доставка;</li>
+                        <li>СДЭК;</li>
+                        <li>Почта России.</li>
+                    </ul>
+                    <p class="by-text">Стоимость доставки оплачивается отдельно и рассчитывается индивидуально<br>в зависимости от региона и выбранного способа доставки.</p>
+                    <p class="by-text">Для жителей Санкт-Петербурга возможно личное получение по предварительной<br>договорённости.</p>
+                </div>
+
+                <div class="by-info__section">
+                    <h2 class="by-info__title">ОПТОВЫЕ ЗАКАЗЫ</h2>
+                    <p class="by-text">Игра станет отличным подарком для друзей, коллег и близких.<br>Она подходит для совместного досуга, легко вписывается в корпоративные мероприятия<br>и станет оригинальным подарком для сотрудников или целого коллектива.</p>
+                    <p class="by-text">Доступно оформление заказов в большом количестве. Условия, стоимость и сроки<br>обсуждаются индивидуально.</p>
                 </div>
             </div>
         </section>

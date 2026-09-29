@@ -1,0 +1,201 @@
+/* =====================================================
+   Страница «Контакты» — новая вёрстка по Figma
+   Подключать ПОСЛЕ style.css. Все классы с префиксом ct-,
+   старые .contacts__* правила в style.css больше не нужны
+   (их можно удалить).
+   ===================================================== */
+
+main {
+    flex: 1;
+}
+
+/* Ширина контента 1282px — как в макете */
+.ct-container {
+    max-width: 1322px;
+    margin-inline: auto;
+    padding: 10px 20px 47px;
+    box-sizing: border-box;
+}
+
+.ct-title {
+    margin: 0 0 10px 0;
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 64px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #fff;
+}
+
+/* ---------- Фото + способы связи ---------- */
+.ct-main {
+    display: flex;
+    align-items: stretch;
+    gap: 28px;
+}
+
+.ct-photo {
+    display: block;
+    width: 655px;
+    height: 488px;
+    flex-shrink: 0;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.ct-methods {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.ct-method {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+/* ---------- QR-код с подписью ---------- */
+.ct-qr {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+}
+
+.ct-qr:hover {
+    transform: scale(1.05);
+}
+
+.ct-qr__img {
+    display: block;
+    width: 200px;
+    height: auto;
+    border-radius: 10px;
+}
+
+.ct-qr__caption {
+    margin-top: 8px;
+    padding: 3px 8px;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 17px;
+    font-weight: 300;
+    line-height: 1.3;
+    color: #fff;
+    text-align: center;
+}
+
+/* ---------- Текст рядом с QR ---------- */
+.ct-text {
+    margin: 0 0 1.35em 0;
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 1.35;
+    color: #fff;
+}
+
+.ct-text:last-child {
+    margin-bottom: 0;
+}
+
+.ct-text--link,
+.ct-bold {
+    font-weight: 700;
+}
+
+/* ---------- Плашка с вопросом ---------- */
+.ct-note {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    box-sizing: border-box;
+    min-height: 136px;
+    margin-top: 51px;
+    padding: 0 34px;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 10px;
+}
+
+.ct-note__icon {
+    display: block;
+    flex-shrink: 0;
+    width: auto;
+    height: 93px;
+}
+
+.ct-note__text {
+    margin: 0;
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 1.35;
+    color: #fff;
+}
+
+/* ---------- Меню в шапке: увеличение при наведении ---------- */
+.nav-links-link {
+    display: inline-block;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.nav-links-link:hover {
+    transform: scale(1.08);
+}
+
+/* ---------- Адаптив ---------- */
+@media (max-width: 1100px) {
+    .ct-main {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .ct-photo {
+        width: 100%;
+        max-width: 655px;
+        height: auto;
+        aspect-ratio: 655 / 488;
+    }
+
+    .ct-methods {
+        width: 100%;
+        gap: 26px;
+    }
+}
+
+@media (max-width: 768px) {
+    .ct-title {
+        font-size: 36px;
+        text-align: center;
+    }
+
+    .ct-method {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .ct-qr__img {
+        width: 150px;
+    }
+
+    .ct-text,
+    .ct-note__text {
+        font-size: 20px;
+    }
+
+    .ct-note {
+        flex-direction: column;
+        padding: 20px;
+        margin-top: 30px;
+        text-align: center;
+    }
+
+    .ct-note__icon {
+        height: 70px;
+    }
+}

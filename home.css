@@ -1,0 +1,413 @@
+/* =====================================================
+   Главная страница «Резонанс» — новая вёрстка по Figma
+   Подключать ПОСЛЕ style.css. Все классы с префиксом home-,
+   поэтому старые .hero__* правила не конфликтуют
+   (их можно потом удалить из style.css).
+   ===================================================== */
+
+main {
+    overflow-x: clip;
+    flex: 1;
+}
+
+.home-container {
+    max-width: 1306px;
+    margin-inline: auto;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+/* Заглушка под будущие картинки */
+.home-placeholder {
+    background-color: #8c8c8c;
+}
+
+/* ---------- Общие текстовые стили ---------- */
+.home-title {
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 64px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #fff;
+    margin: 0 0 15px 0;
+}
+
+.home-text {
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 1.35;
+    color: #fff;
+    margin: 0 0 1.35em 0;
+}
+
+.home-text:last-child {
+    margin-bottom: 0;
+}
+
+.home-bold {
+    font-weight: 700;
+}
+
+/* ---------- 1. Первый экран ---------- */
+.home-hero {
+    display: flex;
+    align-items: stretch;
+    gap: 26px;
+    margin-top: 26px;
+    margin-bottom: 26px;
+}
+
+.home-hero__image {
+    display: block;
+    width: 628px;
+    height: 633px;
+    flex-shrink: 0;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.home-hero__content {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Кнопка «Купить» — выходит к правому краю экрана, как в макете */
+.home-buy {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    box-sizing: border-box;
+    height: 136px;
+    padding-left: 24px;
+    margin-top: 20px;
+    background-color: rgba(2, 2, 2, 0.8);
+    border-radius: 10px;
+    color: #fff;
+    font-family: 'Noto Sans', sans-serif;
+    transition: transform 0.3s ease;
+}
+
+.home-buy:hover {
+    transform: scale(1.03);
+}
+
+/* Пункты меню в шапке: плавное увеличение при наведении.
+   (Если нужно на всех страницах — перенесите этот блок в style.css) */
+.nav-links-link {
+    display: inline-block;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.nav-links-link:hover {
+    transform: scale(1.08);
+}
+
+.home-buy__text {
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 1.2;
+}
+
+.home-buy__price {
+    font-size: 64px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+/* ---------- 2. Две картинки в ряд ---------- */
+.home-gallery {
+    display: flex;
+    gap: 26px;
+}
+
+.home-gallery__image {
+    display: block;
+    flex: 1;
+    min-width: 0;
+    height: 609px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+/* ---------- 3. О проекте ---------- */
+.home-about {
+    padding-top: 40px;
+    padding-bottom: 50px;
+}
+
+/* ---------- 4. Красная плашка «В комплекте» ---------- */
+.home-kit {
+    padding: 14px 0 30px;
+}
+
+/* ---------- Затемнение: от конца Rectangle 5 до конца страницы ---------- */
+.home-dark {
+    background: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.75) 0%,
+        rgba(0, 0, 0, 0.92) 100%
+    );
+}
+
+/* ---------- 5. Широкая картинка с картами ---------- */
+.home-banner {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+/* ---------- 6. Жанры ---------- */
+.home-genres {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 4px;
+    margin: 0;
+    padding: 40px 0 0 0;
+}
+
+.home-genres__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.4s ease;
+}
+
+.home-genres__item:hover {
+    transform: scale(1.15);
+    position: relative;
+    z-index: 1;
+}
+
+/* Все остальные жанры чуть-чуть уменьшаются */
+:where(.home-genres:has(.home-genres__item:hover) .home-genres__item:not(:hover)) {
+    transform: scale(0.95);
+}
+
+/* Ближайшие соседи (слева и справа) уменьшаются сильнее — чтобы не накладывались */
+.home-genres__item:hover + .home-genres__item,
+.home-genres__item:has(+ .home-genres__item:hover) {
+    transform: scale(0.88);
+}
+
+.home-genres__img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    object-fit: cover;
+    transition: box-shadow 0.4s ease;
+}
+
+/* Цвет подсветки у каждого жанра свой (порядок как в HTML) */
+.home-genres__item:nth-child(1)  { --glow: #8FA13B; } /* Фолк */
+.home-genres__item:nth-child(2)  { --glow: #6B3A1F; } /* Хип-хоп */
+.home-genres__item:nth-child(3)  { --glow: #1E4FC4; } /* Блюз */
+.home-genres__item:nth-child(4)  { --glow: #E07B1F; } /* Джаз */
+.home-genres__item:nth-child(5)  { --glow: #E0341F; } /* Рок */
+.home-genres__item:nth-child(6)  { --glow: #7B1FD4; } /* Электронная */
+.home-genres__item:nth-child(7)  { --glow: #B8860B; } /* Классическая */
+.home-genres__item:nth-child(8)  { --glow: #E01FA0; } /* Поп */
+.home-genres__item:nth-child(10) { --glow: #1F4FA0; } /* Металл */
+
+.home-genres__item:hover .home-genres__img {
+    box-shadow: 0 0 26px 4px var(--glow);
+}
+
+/* Регги — два цвета: зелёный слева, красный справа */
+.home-genres__item:nth-child(9):hover .home-genres__img {
+    box-shadow:
+        -12px 0 26px 2px #3FA53F,
+        12px 0 26px 2px #E03F1F;
+}
+
+.home-genres__name {
+    margin-top: 8px;
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.2;
+    color: #fff;
+}
+
+/* ---------- 7. Варианты игры ---------- */
+.home-modes-section {
+    padding-top: 50px;
+}
+
+.home-modes {
+    display: flex;
+    align-items: flex-start;
+    gap: 42px;
+    margin-top: 20px;
+}
+
+.home-modes__lists {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.home-modes__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.home-modes__item {
+    margin-bottom: 12px;
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 28px;
+    line-height: 1.35;
+    color: #fff;
+}
+
+.home-modes__name {
+    display: block;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.home-modes__desc {
+    display: block;
+    font-size: 28px;
+    font-weight: 300;
+    color: #fff;
+}
+
+/* ---------- QR-блоки ---------- */
+.home-qr {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+}
+
+.home-qr:hover {
+    transform: scale(1.02);
+}
+
+.home-qr__img {
+    display: block;
+    width: 200px;
+    height: auto;
+}
+
+.home-qr__caption {
+    margin: 8px 0 0 0;
+    padding: 6px 12px;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 17px;
+    font-weight: 300;
+    color: #fff;
+    text-align: center;
+}
+
+.home-rules-text {
+    margin-top: 20px;
+}
+
+.home-tg {
+    display: flex;
+    align-items: flex-start;
+    gap: 27px;
+    margin-top: 26px;
+    padding-bottom: 48px;
+}
+
+.home-tg .home-text {
+    flex: 1;
+}
+
+/* ---------- Адаптив ---------- */
+@media (max-width: 1100px) {
+    .home-hero {
+        flex-direction: column;
+    }
+
+    .home-hero__image {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 628 / 633;
+    }
+
+    .home-buy {
+        margin-right: 0;
+        border-radius: 10px;
+    }
+
+    .home-gallery {
+        flex-direction: column;
+    }
+
+    .home-gallery__image {
+        height: auto;
+        aspect-ratio: 628 / 609;
+    }
+
+    .home-genres {
+        grid-template-columns: repeat(5, 1fr);
+        row-gap: 20px;
+    }
+
+    .home-modes {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .home-modes__lists {
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .home-title {
+        font-size: 36px;
+    }
+
+    .home-text,
+    .home-modes__item {
+        font-size: 20px;
+    }
+
+    .home-buy {
+        height: 100px;
+    }
+
+    .home-buy__text {
+        font-size: 18px;
+    }
+
+    .home-buy__price {
+        font-size: 40px;
+    }
+
+    .home-modes__lists {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .home-tg {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .home-qr__img {
+        width: 150px;
+    }
+}
+
+@media (max-width: 480px) {
+    .home-genres {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

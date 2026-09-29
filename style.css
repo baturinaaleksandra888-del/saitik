@@ -10,7 +10,7 @@ body {
     display: flex;
     flex-direction: column;
     background-color: #000000;
-    background-image: url('images/backround.png');
+    background-image: url('images/backround.webp');
     background-size: cover;
     background-position: center top;
     background-repeat: no-repeat;
@@ -453,8 +453,17 @@ a{
 .hero__black-bg {
     width: 100vw;
     margin-left: calc(-50vw + 50%);
+    /*background: rgba(0, 0, 0, 0.8);*/
+    padding: 1px 0;
+    margin-top: 0px;
+}
+
+.hero__black-bgg {
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
     background: rgba(0, 0, 0, 0.8);
     padding: 1px 0;
+    height: 100%;
     margin-top: 0px;
 }
 
@@ -465,13 +474,14 @@ a{
 }
 
 .hero__links {
-    max-width: 1306px;
+    max-width: 1307px;
+    height: 100%;
     margin-inline: auto;
-    padding: 0 20px;
+    padding: 0 20px; 
 }
 
 .hero__imges-backgraund-red {
-    background-image: url('images/Mask group.png');
+    /*background-image: url('images/Mask group.png');*/
     background-size: cover;  /* ← покрывает всю ширину */
     background-position: center;
     background-repeat: no-repeat;
@@ -993,7 +1003,7 @@ a{
 .buy__image {
     display: block;
     width: 655px;
-    height: auto;
+    height: 491px;
     border-radius: 10px;
 }
 
@@ -1014,7 +1024,7 @@ a{
     font-weight: 400;
     color: white;
     line-height: 1.4;
-    margin: 0 0 0px 0;
+    margin: -7px 0 0px 0;
 }
 
 .buy__main-info-right-text .hero__text-bold {

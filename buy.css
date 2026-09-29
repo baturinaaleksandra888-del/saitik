@@ -1,0 +1,312 @@
+/* =====================================================
+   Страница «Купить» — новая вёрстка по Figma
+   Подключать ПОСЛЕ style.css. Все классы с префиксом by-,
+   старые .buy__* правила в style.css больше не нужны
+   (их можно удалить).
+   ===================================================== */
+
+main {
+    flex: 1;
+}
+
+/* Ширина контента 1306px — как у шапки */
+.by-container {
+    max-width: 1346px;
+    margin-inline: auto;
+    padding: 10px 20px 50px;
+    box-sizing: border-box;
+}
+
+.by-title {
+    margin: 0 0 10px 0;
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 64px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #fff;
+}
+
+/* ---------- Общие текстовые стили ---------- */
+.by-text {
+    margin: 0;
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 1.36;
+    color: #fff;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 1);
+}
+
+.by-bold {
+    font-weight: 700;
+}
+
+/* Тёмная плашка (цена) */
+.by-price {
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    height: 136px;
+    padding: 0 24px;
+    background-color: rgba(2, 2, 2, 0.8);
+    border-radius: 10px;
+    color: #fff;
+    font-family: 'Noto Sans', sans-serif;
+}
+
+.by-price__value {
+    font-size: 64px;
+    font-weight: 700;
+    line-height: 1.2;
+    white-space: nowrap;
+}
+
+/* ---------- Ряд 1: фото + заказ ---------- */
+.by-row {
+    display: flex;
+    align-items: stretch;
+    gap: 34px;
+}
+
+.by-row--second {
+    margin-top: 54px;
+}
+
+.by-photo {
+    display: block;
+    flex: 1;
+    min-width: 0;
+    height: 555px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.by-photo--main {
+    flex: 0 0 655px;
+    width: 655px;
+}
+
+.by-col {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.by-col--order {
+    gap: 20px;
+}
+
+/* QR + звезда в одной строке */
+.by-qr-row {
+    display: flex;
+    align-items: flex-start;
+}
+
+.by-qr {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+}
+
+.by-qr:hover {
+    transform: scale(1.05);
+}
+
+.by-qr__img {
+    display: block;
+    width: 200px;
+    height: auto;
+    border-radius: 10px;
+}
+
+.by-qr__caption {
+    margin-top: 8px;
+    padding: 4px 8px;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 17px;
+    font-weight: 300;
+    line-height: 1.3;
+    color: #fff;
+    text-align: center;
+}
+
+.by-star {
+    display: block;
+    width: 330px;
+    height: 282px;
+    margin-top: -22px;
+    flex-shrink: 0;
+}
+
+/* Кнопка «4 900 руб.» */
+.by-buy {
+    transition: transform 0.3s ease;
+}
+
+.by-buy:hover {
+    transform: scale(1.03);
+}
+
+/* ---------- Ряд 2: камни ---------- */
+.by-col--stone {
+    flex: 0 0 655px;
+    gap: 24px;
+    padding-left: 5px;
+    box-sizing: border-box;
+}
+
+.by-stone-price {
+    width: 629px;
+    max-width: 100%;
+    gap: 54px;
+    padding-left: 22px;
+}
+
+.by-stone-price__note {
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 1.36;
+}
+
+/* ---------- Оплата / Доставка / Оптовые заказы ---------- */
+.by-info {
+    margin-top: 56px;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 1);
+}
+
+.by-info__section {
+    margin-bottom: 56px;
+}
+
+.by-info__section:last-child {
+    margin-bottom: 0;
+}
+
+.by-info__title {
+    margin: 0 0 8px 0;
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 64px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #fff;
+}
+
+.by-info__section .by-text {
+    margin-bottom: 1.36em;
+}
+
+.by-info__section .by-text:last-child {
+    margin-bottom: 0;
+}
+
+/* Список способов доставки */
+.by-list {
+    margin: 0 0 1.36em 0;
+    padding: 0;
+    list-style: none;
+}
+
+.by-list li {
+    position: relative;
+    padding-left: 49px;
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.36;
+    color: #fff;
+}
+
+.by-list li::before {
+    content: "•";
+    position: absolute;
+    left: 20px;
+}
+
+/* ---------- Меню в шапке: увеличение при наведении ---------- */
+.nav-links-link {
+    display: inline-block;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.nav-links-link:hover {
+    transform: scale(1.08);
+}
+
+/* ---------- Адаптив ---------- */
+@media (max-width: 1100px) {
+    .by-row {
+        flex-direction: column;
+    }
+
+    .by-photo,
+    .by-photo--main {
+        flex: none;
+        width: 100%;
+        height: auto;
+        aspect-ratio: 655 / 555;
+    }
+
+    .by-col--stone {
+        flex: none;
+        padding-left: 0;
+    }
+
+    .by-stone-price {
+        width: 100%;
+    }
+
+    /* На планшете сначала текст про камни, потом его фото */
+    .by-qr-row {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .by-title,
+    .by-info__title {
+        font-size: 36px;
+    }
+
+    .by-text,
+    .by-list li,
+    .by-stone-price__note {
+        font-size: 20px;
+    }
+
+    .by-price {
+        height: 100px;
+    }
+
+    .by-price__value {
+        font-size: 36px;
+    }
+
+    .by-stone-price {
+        gap: 20px;
+        padding: 0 16px;
+    }
+
+    .by-star {
+        width: 120px;
+        height: auto;
+        margin-top: 0;
+    }
+
+    .by-qr__img {
+        width: 150px;
+    }
+
+    .by-list li {
+        padding-left: 32px;
+    }
+
+    .by-list li::before {
+        left: 10px;
+    }
+}

@@ -1,11 +1,11 @@
-<!-- contacts.html -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resonans - Контакты</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="contacts.css">
     <link rel="shortcut icon" href="images/ikonka-01.png" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -30,61 +30,53 @@
     </header>
 
     <main>
-        <section class="contacts">
-            <div class="contacts__container">
-                <p>КОНТАКТЫ</p>
-                <div class="contacts__info">
-                    <!-- Левая колонка: изображение contacts.png -->
-                    <div class="contacts__info-image">
-                        <img src="images/contacts.png" alt="Contacts Image" class="contacts__image">
-                    </div>
-                    <!-- Правая колонка: QR-коды и текст -->
-                    <div class="contacts__info-right">
-                        <!-- Блок Telegram -->
-                        <div class="contacts__info-qr-tg">
-                            <a href="https://t.me/spiderzeppelin" target="_blank" class="contacts__info-link">
-                                <div class="contacts__info-qrt">
-                                    <img src="images/qr-code tg.png" alt="QR Code tg" class="contacts__qrt">
-                                    <p class="contacts__qr-text">нажми или отсканируй</p>
-                                </div>
-                            </a>
-                            <div class="contacts__info-tg">
-                                <p>
-                                    <span class="hero__text-bold">Telegram:</span><br>
-                                    Для быстрых ответов<br>
-                                    и обратной связи.
-                                </p>
-                                <p class="contacts__tg-link">@spiderzeppelin</p>
-                            </div>
+        <section class="ct-container">
+            <h1 class="ct-title">КОНТАКТЫ</h1>
+
+            <div class="ct-main">
+                <!-- Фото слева -->
+                <img src="images/contacts.png" alt="Игра «Резонанс»" class="ct-photo">
+
+                <!-- Способы связи справа -->
+                <div class="ct-methods">
+                    <!-- Telegram -->
+                    <div class="ct-method">
+                        <a href="https://t.me/spiderzeppelin" target="_blank" class="ct-qr">
+                            <img src="images/qr-code tg.png" alt="QR-код: Telegram" class="ct-qr__img">
+                            <span class="ct-qr__caption">нажми или отсканируй</span>
+                        </a>
+                        <div class="ct-method__text">
+                            <p class="ct-text">
+                                <span class="ct-bold">Telegram</span><br>
+                                Для быстрых ответов<br>
+                                и обратной связи.
+                            </p>
+                            <p class="ct-text ct-text--link">@spiderzeppelin</p>
                         </div>
-                        
-                        <!-- Блок Email -->
-                        <div class="contacts__info-email">
-                            <a href="mailto:ar6y3123@gmail.com" class="contacts__info-link">
-                                <div class="contacts__info-email-qr">
-                                    <img src="images/qr-code mail.png" alt="QR Code Email" class="contacts__email-qr">
-                                    <p class="contacts__qr-text">нажми или отсканируй</p>
-                                </div>
-                            </a>
-                            <div class="contacts__info-email-text">
-                                <p>
-                                    <span class="hero__text-bold">Электронная почта</span><br>
-                                    Для вопросов, предложений<br>
-                                    и сотрудничества.
-                                </p>
-                                <p class="contacts__email-link">ar6y3123@gmail.com</p>
-                            </div>
+                    </div>
+
+                    <!-- Электронная почта -->
+                    <div class="ct-method">
+                        <a href="mailto:ar6y3123@gmail.com" class="ct-qr">
+                            <img src="images/qr-code mail.png" alt="QR-код: электронная почта" class="ct-qr__img">
+                            <span class="ct-qr__caption">нажми или отсканируй</span>
+                        </a>
+                        <div class="ct-method__text">
+                            <p class="ct-text">
+                                <span class="ct-bold">Электронная почта</span><br>
+                                Для вопросов, предложений<br>
+                                и сотрудничества.
+                            </p>
+                            <p class="ct-text ct-text--link">ar6y3123@gmail.com</p>
                         </div>
                     </div>
                 </div>
-                <div class="contacts__question">
-                    <div class="contacts__question-image">
-                        <img src="images/sign.png" alt="Question Image" class="contacts__question-image">
-                    </div>
-                    <div class="contacts__question-text">
-                        <p>Если у вас есть вопросы, предложения или вы хотите поделиться своими впечатлениями об игре, свяжитесь любым удобным способом. </p>
-                    </div>
-                </div>
+            </div>
+
+            <!-- Плашка с вопросом -->
+            <div class="ct-note">
+                <img src="images/sign.png" alt="" class="ct-note__icon">
+                <p class="ct-note__text">Если у вас есть вопросы, предложения или вы хотите поделиться своими впечатлениями об игре, свяжитесь любым удобным способом.</p>
             </div>
         </section>
 
