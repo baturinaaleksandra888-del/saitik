@@ -3,6 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>document.documentElement.classList.add('is-loading');</script>
+    <noscript><style>html.is-loading body{opacity:1}</style></noscript>
+    <style>
+        html.is-loading body { opacity: 0; }
+        html.is-loading *, html.is-loading *::after { animation-play-state: paused !important; }
+        body { transition: opacity .35s ease; }
+    </style>
     <title>Resonans - Отзывы</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="reviews.css">
@@ -75,16 +82,8 @@
                     </div>
                 </article>
 
-                <!-- Отзыв 4 -->
-                <article class="rv-card">
-                    <h2 class="rv-card__name">Леша Зотченко</h2>
-                    <p class="rv-card__role">видеоблогер AGAGRAD</p>
-                    <div class="rv-card__text">
-                        <p>Сыграли в данную настолку, был приятно удивлен обилием разной музыки в уже привычных жанрах, мне нравится что данная игра ориентирована на фантазию, и скорее является неким трамплином к бурному обсуждению и диалогу, нежели ожесточенному соревнованию (спорили пол часа касаемо лучшей песни киша). Если любите музыку, то можете послушать ее дома, а если хочется встретиться с друзьями, то советую эту настолку</p>
-                    </div>
-                </article>
 
-                <!-- Отзыв 5 -->
+                <!-- Отзыв 4 -->
                 <article class="rv-card">
                     <h2 class="rv-card__name">Александр Дубровин</h2>
                     <p class="rv-card__role">Юрист</p>
@@ -94,7 +93,7 @@
                     </div>
                 </article>
 
-                <!-- Отзыв 6 -->
+                <!-- Отзыв 5 -->
                 <article class="rv-card">
                     <h2 class="rv-card__name">Кирилл Метаксас</h2>
                     <p class="rv-card__role">Энтомолог</p>
@@ -113,5 +112,13 @@
             </div>
         </footer>
     </main>
+    <script>
+        const show = () => document.documentElement.classList.remove('is-loading');
+        Promise.all([
+            document.fonts.ready,
+            new Promise(r => window.addEventListener('load', r))
+        ]).then(show);
+        setTimeout(show, 3000); // страховка: если что-то грузится слишком долго
+    </script>
 </body>
 </html>

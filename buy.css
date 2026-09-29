@@ -95,6 +95,7 @@ main {
 }
 
 .by-col--order {
+    justify-content: space-between; /* текст и QR — вровень с верхом фото, цена — по низу */
     gap: 20px;
 }
 
@@ -156,9 +157,26 @@ main {
 /* ---------- Ряд 2: камни ---------- */
 .by-col--stone {
     flex: 0 0 655px;
+    justify-content: space-between; /* заголовок — вровень с верхом фото, остальное — по низу */
     gap: 24px;
     padding-left: 5px;
     box-sizing: border-box;
+}
+
+.by-stone-title {
+    margin: 0;
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #fff;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 1);
+}
+
+.by-stone-body {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 .by-stone-price {
@@ -269,8 +287,9 @@ main {
 
 @media (max-width: 768px) {
     .by-title,
-    .by-info__title {
-        font-size: 36px;
+    .by-info__title,
+    .by-stone-title {
+        font-size: 30px;
     }
 
     .by-text,

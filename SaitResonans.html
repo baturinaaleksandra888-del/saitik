@@ -3,6 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Прелоадер: показывается один раз за визит на сайт -->
+    <script>
+        window.__rlStart = Date.now();
+        try {
+            if (!sessionStorage.getItem('rl-seen')) document.documentElement.classList.add('is-loading');
+        } catch (e) {}
+    </script>
+    <style>
+        html.is-loading { overflow: hidden; }
+        .rl-preloader {
+            display: none; position: fixed; inset: 0; z-index: 100000;
+            flex-direction: column; align-items: center; justify-content: center;
+            background: #000; transition: opacity .7s ease;
+        }
+        html.is-loading .rl-preloader, html.rl-leaving .rl-preloader { display: flex; }
+        html.rl-leaving .rl-preloader { opacity: 0; pointer-events: none; }
+
+        .rl-stage { position: relative; width: 200px; height: 200px; display: flex; align-items: center; justify-content: center; }
+        .rl-ring { position: absolute; inset: 0; border: 2px solid #ff7a2f; border-radius: 50%; opacity: 0;
+            animation: rl-ring 2.4s ease-out infinite; animation-delay: calc(var(--i) * .8s); }
+        @keyframes rl-ring { 0% { transform: scale(.35); opacity: .7; } 100% { transform: scale(1.9); opacity: 0; } }
+
+        .rl-main { width: 110px; height: 110px; overflow: visible;
+            animation: rl-spin 3.6s cubic-bezier(.65, 0, .35, 1) infinite, rl-glow 1.8s ease-in-out infinite alternate; }
+        .rl-main polygon { stroke-dasharray: 1; animation: rl-draw 3.6s ease-in-out infinite; }
+        @keyframes rl-spin { to { transform: rotate(360deg); } }
+        @keyframes rl-draw { 0% { stroke-dashoffset: 1; } 50% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: -1; } }
+        @keyframes rl-glow { from { filter: drop-shadow(0 0 6px rgba(255,122,47,.5)); } to { filter: drop-shadow(0 0 22px rgba(255,122,47,.95)); } }
+
+        .rl-orbit { position: absolute; inset: var(--r, 0px); animation: rl-spin var(--t, 5s) linear infinite; animation-direction: var(--dir, normal); }
+        .rl-orbit svg { position: absolute; left: 50%; top: 0; width: var(--s, 16px); height: var(--s, 16px);
+            margin: calc(var(--s, 16px) / -2) 0 0 calc(var(--s, 16px) / -2); color: var(--c, #ffa45e);
+            filter: drop-shadow(0 0 6px var(--c, #ffa45e)); }
+        .rl-orbit--1 { --t: 4.5s; --s: 16px; --c: #ffa45e; }
+        .rl-orbit--2 { --t: 7s; --s: 12px; --c: #ffd08f; --r: -22px; --dir: reverse; }
+        .rl-orbit--3 { --t: 10s; --s: 9px; --c: #e0341f; --r: 24px; }
+
+        .rl-caption { margin: 44px 0 0; font-family: 'Noto Sans', sans-serif; font-size: 16px; font-weight: 300;
+            letter-spacing: .6em; text-indent: .6em; color: #fff; animation: rl-pulse 1.8s ease-in-out infinite alternate; }
+        @keyframes rl-pulse { from { opacity: .25; } to { opacity: .9; } }
+
+        @media (prefers-reduced-motion: reduce) {
+            .rl-ring, .rl-orbit, .rl-main { animation: none; }
+            .rl-main polygon { stroke-dasharray: none; animation: none; }
+        }
+
+        /* Пока идёт прелоадер, анимации страницы (например, на «Отзывах») ждут */
+        html.is-loading body > :not(.rl-preloader),
+        html.is-loading body > :not(.rl-preloader) *,
+        html.is-loading body > :not(.rl-preloader) *::after { animation-play-state: paused !important; }
+    </style>
     <title>Resonans</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="home.css">
@@ -12,6 +63,21 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
 <body>
+    <div class="rl-preloader" aria-hidden="true">
+        <div class="rl-stage">
+            <span class="rl-ring" style="--i:0"></span>
+            <span class="rl-ring" style="--i:1"></span>
+            <span class="rl-ring" style="--i:2"></span>
+            <div class="rl-orbit rl-orbit--3"><svg viewBox="0 0 100 100"><polygon fill="none" stroke="currentColor" stroke-width="6" stroke-linejoin="round" points="50,4 61,38 96,38 68,59 79,93 50,72 21,93 32,59 4,38 39,38"/></svg></div>
+            <div class="rl-orbit rl-orbit--2"><svg viewBox="0 0 100 100"><polygon fill="none" stroke="currentColor" stroke-width="6" stroke-linejoin="round" points="50,4 61,38 96,38 68,59 79,93 50,72 21,93 32,59 4,38 39,38"/></svg></div>
+            <div class="rl-orbit rl-orbit--1"><svg viewBox="0 0 100 100"><polygon fill="none" stroke="currentColor" stroke-width="6" stroke-linejoin="round" points="50,4 61,38 96,38 68,59 79,93 50,72 21,93 32,59 4,38 39,38"/></svg></div>
+            <svg class="rl-main" viewBox="0 0 100 100">
+                <defs><linearGradient id="rlg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffd08f"/><stop offset="0.5" stop-color="#ff7a2f"/><stop offset="1" stop-color="#e0341f"/></linearGradient></defs>
+                <polygon pathLength="1" fill="none" stroke="url(#rlg)" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round" points="50,4 61,38 96,38 68,59 79,93 50,72 21,93 32,59 4,38 39,38"/>
+            </svg>
+        </div>
+        <p class="rl-caption">РЕЗОНАНС</p>
+    </div>
     <header>
         <div class="header">
             <div class="header__logo">
@@ -39,7 +105,7 @@
                     <div class="home-hero__text">
                         <p class="home-text">«Резонанс» — карточная игра о музыке, разговорах и неожиданных открытиях.<br>100 карт о 10 музыкальных жанрах.</p>
                         <p class="home-text">4 режима игры как для компании так и для одиночной игры.</p>
-                        <p class="home-text">Каждая карта — это повод познакомиться с&nbsp;новой музыкой, выйти за рамки рекомендаций алгоритмов и найти песни, к которым захочется возвращаться.</p>
+                        <p class="home-text">Каждая карта — это повод познакомиться с&nbsp;новой музыкой, выйти за рамки рекомендаций алгоритмов и найти песни, к&nbsp;которым захочется возвращаться.</p>
                     </div>
 
                     <a href="buy.html" class="home-buy">
@@ -51,8 +117,8 @@
 
             <!-- 2. Две картинки в ряд -->
             <div class="home-gallery">
-                <img src="images/Rectangle 1.png" alt="Игра «Резонанс»" class="home-gallery__image">
-                <img src="images/Rectangle 3.png" alt="Игра «Резонанс»" class="home-gallery__image">
+                <img loading="lazy" decoding="async" src="images/Rectangle 1.png" alt="Игра «Резонанс»" class="home-gallery__image">
+                <img loading="lazy" decoding="async" src="images/Rectangle 3.png" alt="Игра «Резонанс»" class="home-gallery__image">
             </div>
         </section>
 
@@ -60,7 +126,7 @@
         <section class="home-about home-container" id="about-project">
             <h1 class="home-title">О ПРОЕКТЕ</h1>
             <p class="home-text">«Резонанс» подходит для домашних вечеров, встреч с друзьями и в качестве подарка человеку, который любит музыку.</p>
-            <p class="home-text">Проект посвящён истории музыкальных жанров и знакомству с культурой, которая окружает нас каждый день, но часто остаётся незамеченной.<br>Цель проекта — совместить полезные интересные факты и приятно провести время одному или в компании и узнать друг друга получше.</p>
+            <p class="home-text">Проект посвящён истории музыкальных жанров и знакомству с культурой,<br>которая окружает нас каждый день, но часто остаётся незамеченной.<br>Цель проекта — совместить полезные интересные факты и приятно провести время одному или в компании и узнать друг друга получше.</p>
         </section>
 
         <!-- 4. Плашка «В комплекте» -->
@@ -71,7 +137,7 @@
         </section>
 
         <!-- 5. Широкая картинка с картами -->
-        <img src="images/Rectangle 5.png" alt="Карты игры «Резонанс»" class="home-banner">
+        <img loading="lazy" decoding="async" src="images/Rectangle 5.png" alt="Карты игры «Резонанс»" class="home-banner">
 
         <!-- Затемнение: от конца Rectangle 5 до конца страницы -->
         <div class="home-dark">
@@ -80,43 +146,43 @@
         <section class="home-container">
             <ul class="home-genres">
                 <li class="home-genres__item">
-                    <img src="images/Фолк.png" alt="Фолк" class="home-genres__img">
+                    <img loading="lazy" decoding="async" src="images/Фолк.png" alt="Фолк" class="home-genres__img">
                     <span class="home-genres__name">Фолк</span>
                 </li>
                 <li class="home-genres__item">
-                    <img src="images/Хип хоп.png" alt="Хип-хоп" class="home-genres__img">
+                    <img loading="lazy" decoding="async" src="images/Хип хоп.png" alt="Хип-хоп" class="home-genres__img">
                     <span class="home-genres__name">Хип-хоп</span>
                 </li>
                 <li class="home-genres__item">
-                    <img src="images/Блюз.png" alt="Блюз" class="home-genres__img">
+                    <img loading="lazy" decoding="async" src="images/Блюз.png" alt="Блюз" class="home-genres__img">
                     <span class="home-genres__name">Блюз</span>
                 </li>
                 <li class="home-genres__item">
-                    <img src="images/Джаз.png" alt="Джаз" class="home-genres__img">
+                    <img loading="lazy" decoding="async" src="images/Джаз.png" alt="Джаз" class="home-genres__img">
                     <span class="home-genres__name">Джаз</span>
                 </li>
                 <li class="home-genres__item">
-                    <img src="images/Рок.png" alt="Рок" class="home-genres__img">
+                    <img loading="lazy" decoding="async" src="images/Рок.png" alt="Рок" class="home-genres__img">
                     <span class="home-genres__name">Рок</span>
                 </li>
                 <li class="home-genres__item">
-                    <img src="images/Электронная.png" alt="Электронная музыка" class="home-genres__img">
+                    <img loading="lazy" decoding="async" src="images/Электронная.png" alt="Электронная музыка" class="home-genres__img">
                     <span class="home-genres__name">Электронная музыка</span>
                 </li>
                 <li class="home-genres__item">
-                    <img src="images/Классика.png" alt="Классическая музыка" class="home-genres__img">
+                    <img loading="lazy" decoding="async" src="images/Классика.png" alt="Классическая музыка" class="home-genres__img">
                     <span class="home-genres__name">Классическая музыка</span>
                 </li>
                 <li class="home-genres__item">
-                    <img src="images/Поп.png" alt="Поп" class="home-genres__img">
+                    <img loading="lazy" decoding="async" src="images/Поп.png" alt="Поп" class="home-genres__img">
                     <span class="home-genres__name">Поп</span>
                 </li>
                 <li class="home-genres__item">
-                    <img src="images/Регги.png" alt="Регги" class="home-genres__img">
+                    <img loading="lazy" decoding="async" src="images/Регги.png" alt="Регги" class="home-genres__img">
                     <span class="home-genres__name">Регги</span>
                 </li>
                 <li class="home-genres__item">
-                    <img src="images/Металл.png" alt="Металл" class="home-genres__img">
+                    <img loading="lazy" decoding="async" src="images/Металл.png" alt="Металл" class="home-genres__img">
                     <span class="home-genres__name">Металл</span>
                 </li>
             </ul>
@@ -129,7 +195,7 @@
 
             <div class="home-modes">
                 <a href="https://disk.yandex.ru/i/v5vvpAvgZz5IJg?clckid=051d8c33" target="_blank" class="home-qr">
-                    <img src="images/qr-code rules.png" alt="QR-код: правила игры" class="home-qr__img">
+                    <img loading="lazy" decoding="async" src="images/qr-code rules.png" alt="QR-код: правила игры" class="home-qr__img">
                     <p class="home-qr__caption">нажми или отсканируй</p>
                 </a>
 
@@ -168,7 +234,7 @@
             <!-- Telegram -->
             <div class="home-tg">
                 <a href="https://t.me/resonanstype" target="_blank" class="home-qr">
-                    <img src="images/qr-code tg.png" alt="QR-код: Telegram-канал" class="home-qr__img">
+                    <img loading="lazy" decoding="async" src="images/qr-code tg.png" alt="QR-код: Telegram-канал" class="home-qr__img">
                     <p class="home-qr__caption">нажми или отсканируй</p>
                 </a>
                 <p class="home-text"><span class="home-bold">Telegram-канал</span> — это продолжение проекта. Здесь публикуются материалы о музыке, музыкальных жанрах, интересных песнях и&nbsp;исполнителях, рекомендации и рубрика «Песня недели».<br>Также в канале рассказывается о процессе разработки, создании новых колод и будущих проектах.</p>
@@ -185,5 +251,34 @@
 
         </div><!-- /home-dark -->
     </main>
+    <script>
+        (function () {
+            var d = document.documentElement;
+            if (!d.classList.contains('is-loading')) return;
+            var done = false;
+            function finish() {
+                if (done) return; done = true;
+                // минимум 1.6 с, чтобы анимацию было видно, даже если всё уже в кэше
+                var wait = Math.max(0, 1600 - (Date.now() - window.__rlStart));
+                setTimeout(function () {
+                    try { sessionStorage.setItem('rl-seen', '1'); } catch (e) {}
+                    d.classList.remove('is-loading');
+                    d.classList.add('rl-leaving');
+                    setTimeout(function () {
+                        d.classList.remove('rl-leaving');
+                        var p = document.querySelector('.rl-preloader');
+                        if (p) p.remove();
+                    }, 800);
+                }, wait);
+            }
+            Promise.all([
+                document.fonts.ready,
+                new Promise(function (r) {
+                    if (document.readyState === 'complete') r(); else window.addEventListener('load', r);
+                })
+            ]).then(finish);
+            setTimeout(finish, 6000); // страховка
+        })();
+    </script>
 </body>
 </html>

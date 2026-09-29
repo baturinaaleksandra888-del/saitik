@@ -3,6 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>document.documentElement.classList.add('is-loading');</script>
+    <noscript><style>html.is-loading body{opacity:1}</style></noscript>
+    <style>
+        html.is-loading body { opacity: 0; }
+        html.is-loading *, html.is-loading *::after { animation-play-state: paused !important; }
+        body { transition: opacity .35s ease; }
+    </style>
     <title>Resonans - Контакты</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="contacts.css">
@@ -75,7 +82,7 @@
 
             <!-- Плашка с вопросом -->
             <div class="ct-note">
-                <img src="images/sign.png" alt="" class="ct-note__icon">
+                <img loading="lazy" decoding="async" src="images/sign.png" alt="" class="ct-note__icon">
                 <p class="ct-note__text">Если у вас есть вопросы, предложения или вы хотите поделиться своими впечатлениями об игре, свяжитесь любым удобным способом.</p>
             </div>
         </section>
@@ -87,5 +94,13 @@
             </div>
         </footer>
     </main>
+    <script>
+        const show = () => document.documentElement.classList.remove('is-loading');
+        Promise.all([
+            document.fonts.ready,
+            new Promise(r => window.addEventListener('load', r))
+        ]).then(show);
+        setTimeout(show, 3000); // страховка: если что-то грузится слишком долго
+    </script>
 </body>
 </html>

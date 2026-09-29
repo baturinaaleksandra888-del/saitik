@@ -3,6 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>document.documentElement.classList.add('is-loading');</script>
+<noscript><style>html.is-loading body{opacity:1}</style></noscript>
+<style>
+    html.is-loading body { opacity: 0; }
+    html.is-loading *, html.is-loading *::after { animation-play-state: paused !important; }
+    body { transition: opacity .35s ease; }
+</style>
     <title>Перенаправление...</title>
     <!-- Это мета-тег автоматически перенаправит браузер на SaitResonans.html -->
     <meta http-equiv="refresh" content="0; url=SaitResonans.html">

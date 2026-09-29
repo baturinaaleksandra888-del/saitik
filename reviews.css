@@ -37,6 +37,15 @@ main {
     text-shadow: 0 4px 20px rgba(0, 0, 0, 1);
 }
 
+/* На широких экранах — одна строка (шрифт подстраивается под ширину) */
+@media (min-width: 1100px) {
+    .rv-intro {
+        max-width: none;
+        white-space: nowrap;
+        font-size: min(18px, calc((100vw - 40px) / 74));
+    }
+}
+
 .rv-intro a {
     font-weight: 700;
     color: #fff;
@@ -140,6 +149,9 @@ main {
     font-weight: 300;
     line-height: 1.6;
     color: rgba(255, 255, 255, 0.92);
+    text-align: justify;
+    hyphens: auto;
+    -webkit-hyphens: auto;
 }
 
 .rv-card__text p:last-child {

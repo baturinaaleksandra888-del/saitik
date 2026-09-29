@@ -48,12 +48,28 @@ main {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    gap: 16px;
 }
 
 .ct-method {
     display: flex;
     align-items: flex-start;
     gap: 16px;
+}
+
+/* Текст рядом с QR: по высоте равен самой картинке QR (200px):
+   заголовок и описание вверху, @ник / почта — по нижнему краю QR */
+.ct-method__text {
+    flex: 1;
+    min-width: 0;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.ct-method__text .ct-text {
+    margin: 0;
 }
 
 /* ---------- QR-код с подписью ---------- */
@@ -177,6 +193,11 @@ main {
         flex-direction: column;
         align-items: center;
         text-align: center;
+    }
+
+    .ct-method__text {
+        height: auto;
+        gap: 1em;
     }
 
     .ct-qr__img {

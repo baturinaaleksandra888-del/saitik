@@ -3,6 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>document.documentElement.classList.add('is-loading');</script>
+    <noscript><style>html.is-loading body{opacity:1}</style></noscript>
+    <style>
+        html.is-loading body { opacity: 0; }
+        html.is-loading *, html.is-loading *::after { animation-play-state: paused !important; }
+        body { transition: opacity .35s ease; }
+    </style>
     <title>Resonans - Купить</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="buy.css">
@@ -57,6 +64,9 @@
             <!-- Ряд 2: камни -->
             <div class="by-row by-row--second">
                 <div class="by-col by-col--stone">
+                    <h2 class="by-stone-title">Музыкальный якорь</h2>
+
+                    <div class="by-stone-body">
                     <p class="by-text">
                         Запомни не только песню, но и чувство.<br>
                         Возьми камень во время прослушивания<br>
@@ -75,8 +85,9 @@
                         <span class="by-stone-price__note">*при покупке игры<br>“Резонанс”</span>
                     </a>
                 </div>
+                </div>
 
-                <img src="images/Rectangle 8.png" alt="Игра «Резонанс» с камнями" class="by-photo">
+                <img loading="lazy" decoding="async" src="images/Rectangle 8.png" alt="Игра «Резонанс» с камнями" class="by-photo">
             </div>
 
             <!-- Оплата / доставка / опт -->
@@ -114,5 +125,13 @@
             </div>
         </footer>
     </main>
+    <script>
+        const show = () => document.documentElement.classList.remove('is-loading');
+        Promise.all([
+            document.fonts.ready,
+            new Promise(r => window.addEventListener('load', r))
+        ]).then(show);
+        setTimeout(show, 3000); // страховка: если что-то грузится слишком долго
+    </script>
 </body>
 </html>
