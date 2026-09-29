@@ -13,11 +13,13 @@
     <title>Resonans - Отзывы</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="reviews.css">
+    <link rel="stylesheet" href="mobile.css">
     <link rel="shortcut icon" href="images/ikonka-01.png" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
+
 <body>
     <!-- Анимация при открытии: полая звезда пролетает слева направо -->
     <div class="rv-star rv-star--1" aria-hidden="true"><div class="rv-star__fall"><svg viewBox="0 0 100 100"><polygon fill="none" stroke="currentColor" stroke-width="5" stroke-linejoin="round" points="50,4 61,38 96,38 68,59 79,93 50,72 21,93 32,59 4,38 39,38"/></svg></div></div>
@@ -120,5 +122,6 @@
         ]).then(show);
         setTimeout(show, 3000); // страховка: если что-то грузится слишком долго
     </script>
+    <script src="mobile-menu.js"></script>
 </body>
 </html>

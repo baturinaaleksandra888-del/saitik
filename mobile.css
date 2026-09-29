@@ -1,0 +1,605 @@
+/* =====================================================
+   Мобильная версия (до 768px): шапка, меню и главная страница.
+   Подключать ПОСЛЕ style.css и страничного css.
+   Работает вместе с mobile-menu.js
+   ===================================================== */
+
+.mm-burger, .mm, .mm-star, .rv-nav { display: none; }
+/* Страница «Купить»: элементы только для мобильной версии */
+.by-price__label, .by-m-note { display: none; }
+
+/* Плавный переход между страницами без мигания (Chrome, Edge, Safari 18.2+) */
+@media (max-width: 768px) and (prefers-reduced-motion: no-preference) {
+    @view-transition { navigation: auto; }
+    ::view-transition-old(root) { animation: vt-out .45s ease both; }
+    ::view-transition-new(root) { animation: vt-in .45s ease both; }
+    @keyframes vt-out { to { opacity: 0; } }
+    @keyframes vt-in  { from { opacity: 0; } }
+}
+
+@media (max-width: 768px) {
+
+    /* ---------- Шапка: бургер слева, логотип справа ---------- */
+    html.mm-ready .nav-links { display: none !important; }
+
+    html.mm-ready .header {
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        padding: 26px 8px 0 16px !important; /* 26px сверху над логотипом */
+        box-sizing: border-box !important;
+        position: relative !important;
+        z-index: 10 !important;
+        margin-bottom: -38px !important; /* насколько логотип заезжает на фото */
+    }
+    html.mm-ready .header__logo { width: 100% !important; }
+    html.mm-ready .header__nav {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+        gap: 6px !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    html.mm-ready .header__nav > img {
+        order: 2;
+        flex: 1 1 auto;
+        min-width: 0;
+        width: auto !important;
+        max-width: 350px !important;
+        height: auto !important;
+        margin: 0 !important;
+        object-fit: contain;
+    }
+
+    .mm-burger {
+        order: 1;
+        display: flex;
+        flex: none;
+        align-items: center;
+        justify-content: center;
+        width: 42px;
+        height: 42px;
+        align-self: flex-start;
+        margin-top: 12px; /* 26 + 12 = 38px сверху до иконки меню */
+        padding: 0;
+        border: 0;
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+        background: url("data:image/svg+xml,%3Csvg width='42' height='42' viewBox='0 0 42 42' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8.75 12.25H33.25' stroke='white' stroke-width='2' stroke-linecap='round'/%3E%3Cpath d='M8.75 21H26.25' stroke='white' stroke-width='2' stroke-linecap='round'/%3E%3Cpath d='M8.75 29.75H19.25' stroke='white' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center / 42px 42px no-repeat;
+    }
+    .mm-burger > * { display: none !important; } /* прячем старые полоски */
+
+    /* ---------- Меню ---------- */
+    html.mm-open { overflow: hidden; }
+
+    .mm {
+        position: fixed;
+        inset: 0;
+        z-index: 9000;
+        display: flex;
+        flex-direction: column;
+        box-sizing: border-box;
+        padding: 14px 24px 32px;
+        overflow: hidden;
+        background: rgba(12, 12, 14, .38);
+        -webkit-backdrop-filter: blur(30px) saturate(150%);
+        backdrop-filter: blur(30px) saturate(150%);
+        transform: translateX(-101%);
+        visibility: hidden;
+        transition: transform .7s cubic-bezier(.7, 0, .2, 1), visibility 0s linear .7s;
+    }
+    html.mm-open .mm {
+        transform: none;
+        visibility: visible;
+        transition: transform .7s cubic-bezier(.7, 0, .2, 1), visibility 0s;
+    }
+
+    .mm__top {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .mm__logo { display: block; width: min(56vw, 215px); height: auto; }
+    .mm__close { order: 0; }
+
+    .mm__list { position: relative; z-index: 1; margin: 30px 0 0; padding: 0; list-style: none; }
+    .mm__list li {
+        opacity: 0;
+        transform: translateX(-26px);
+        transition: opacity .4s ease, transform .4s ease;
+    }
+    html.mm-open .mm__list li {
+        opacity: 1;
+        transform: none;
+        transition: opacity .55s ease, transform .55s ease;
+        transition-delay: calc(.35s + var(--i, 0) * .07s);
+    }
+    .mm__link {
+        display: block;
+        margin: 0 -14px;
+        padding: 12px 14px;
+        border-radius: 12px;
+        font-family: 'Noto Sans', sans-serif;
+        font-size: 24px;
+        font-weight: 700;
+        line-height: 1.3;
+        color: #fff;
+        text-decoration: none;
+        text-transform: uppercase;
+        -webkit-tap-highlight-color: transparent;
+        transition: background-color .2s ease;
+    }
+    .mm__link:active,
+    .mm__link:focus-visible { background: rgba(255, 255, 255, .16); outline: none; }
+    .mm__link.is-current { background: rgba(255, 255, 255, .22); }
+
+    /* Летящие звёздочки */
+    .mm-star { display: block; position: fixed; top: 0; left: 0; z-index: 9500; pointer-events: none; opacity: 0; }
+    .mm-star svg {
+        display: block;
+        width: var(--s); height: var(--s);
+        color: var(--c);
+        filter: drop-shadow(0 0 10px var(--c));
+    }
+    html.mm-open .mm-star   { animation: mm-fly 1.1s cubic-bezier(.35, 0, .6, 1) both; animation-delay: var(--d); }
+    html.mm-open .mm-star__y { animation: mm-drift 1.1s ease-in-out both; animation-delay: var(--d); }
+    html.mm-open .mm-star svg { animation: mm-spin 1.1s linear both; animation-delay: var(--d); }
+
+    @keyframes mm-fly {
+        0%   { transform: translateX(-20vw); opacity: 0; }
+        12%  { opacity: 1; }
+        85%  { opacity: 1; }
+        100% { transform: translateX(112vw); opacity: 0; }
+    }
+    @keyframes mm-drift { from { transform: translateY(var(--y0)); } to { transform: translateY(var(--y1)); } }
+    @keyframes mm-spin  { to { transform: rotate(var(--spin)); } }
+
+    @media (prefers-reduced-motion: reduce) {
+        .mm-star { display: none !important; }
+        .mm, html.mm-open .mm { transition-duration: .01s; }
+    }
+
+    /* ---------- Плавный переход между страницами ---------- */
+    /* Уход со страницы (обычные ссылки): страница растворяется */
+    body { transition: opacity .45s ease; }
+    html.page-leaving { background: #050505; }
+    html.page-leaving body { opacity: 0; pointer-events: none; }
+
+    @media (prefers-reduced-motion: reduce) { body { transition: none; } }
+
+    /* ---------- Главная страница ---------- */
+    .br-d { display: none; }
+
+    .home-container { padding: 0 24px; }
+
+    .home-title { font-size: 20px; line-height: 1.3; margin-bottom: 12px; }
+    .home-text  { font-size: 15px; line-height: 1.4; margin-bottom: 1.3em; }
+
+    /* Первый экран: фото, поверх него плашка «Купить», ниже текст */
+    .home-hero { flex-direction: column; gap: 0; margin-top: 14px; margin-bottom: 22px; }
+    .home-hero__content { display: contents; }
+    .home-hero__image {
+        order: 1;
+        width: 100%; height: auto;
+        aspect-ratio: 342 / 290;
+        border-radius: 10px;
+    }
+    .home-buy {
+        order: 2;
+        position: relative; z-index: 1;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        height: 72px;
+        margin: -72px 0 0;
+        padding: 0 16px;
+        background: linear-gradient(to top, rgba(0, 0, 0, .7), rgba(0, 0, 0, 0));
+        border-radius: 0 0 10px 10px;
+        -webkit-tap-highlight-color: transparent;
+    }
+    .home-buy:hover { transform: none; }
+    .home-buy__price { order: 1; font-size: 22px; line-height: 1.2; }
+    .home-buy__text  { order: 2; font-size: 15px; }
+    .home-hero__text { order: 3; margin-top: 22px; }
+
+    /* Две картинки в ряд */
+    .home-gallery { flex-direction: row; gap: 8px; }
+    .home-gallery__image { height: auto; aspect-ratio: 168 / 162; }
+
+    /* О проекте */
+    .home-about { padding-top: 38px; padding-bottom: 26px; }
+    .home-about .home-title { text-align: center; }
+
+    .home-kit { padding: 20px 0 24px; }
+
+    /* Жанры: 5 в ряд (2 строки), одного размера, без нажатия */
+    .home-genres { grid-template-columns: repeat(5, 1fr); gap: 6px; row-gap: 14px; padding-top: 28px; justify-items: center; }
+    .home-genres > * { grid-column: auto !important; grid-row: auto !important; }
+    .home-genres, .home-genres * {
+        pointer-events: none !important;
+        cursor: default !important;
+        -webkit-tap-highlight-color: transparent;
+        -webkit-touch-callout: none;
+        user-select: none;
+    }
+    .home-genres__img {
+        width: 100%; max-width: 62px;
+        height: auto; aspect-ratio: 1 / 1;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+    .home-genres__name { margin-top: 6px; font-size: 11px; font-weight: 700; text-align: center; }
+
+    /* Варианты игры */
+    .home-modes-section { padding-top: 36px; }
+    .home-modes-section .home-title {
+        font-size: 20px !important; font-weight: 700; line-height: 36px; margin: 0;
+    }
+    .home-modes-intro {
+        max-width: 341px; margin: 4px 0 0;
+        font-size: 12px; font-weight: 500; line-height: 1.4;
+    }
+
+    /* QR 120x120 слева, список 204x184 справа */
+    .home-modes { flex-direction: row; align-items: flex-start; gap: 18px; margin-top: 16px; }
+    .home-modes__lists { display: block; width: 204px; flex: none; min-width: 0; }
+    .home-modes__item { margin: 0 0 5.5px; font-size: 13px; font-weight: 700; line-height: 16px; }
+    .home-modes__item:last-child { margin-bottom: 0; }
+    .home-modes__desc { display: block; font-size: 12px; font-weight: 400; line-height: 15px; }
+
+    .home-qr { align-items: flex-start; flex: none; width: 120px; }
+    .home-qr__img { width: 120px; height: 120px; }
+    .home-qr__caption {
+        align-self: flex-start;
+        width: 120px;
+        margin-top: 8px;
+        padding: 0;
+        background: none;
+        font-size: 12px;
+        line-height: 1.2;
+        text-align: left;
+    }
+
+    /* Текст про правила: 342x70 */
+    .home-rules-text { max-width: 342px; margin-top: 20px; font-size: 14px; line-height: 17.5px; }
+
+    /* Telegram: картинка слева 120x120, текст справа 200 */
+    .home-tg { flex-direction: row; align-items: flex-start; gap: 18px; margin-top: 22px; padding-bottom: 32px; }
+    .home-tg .home-text { flex: none; width: 200px; margin: 0; font-size: 12px; line-height: 17.5px; }
+
+    /* Футер: высота 54 */
+    .footer { min-height: 54px; }
+    .footer__container {
+        flex-direction: column; align-items: flex-start; justify-content: center;
+        gap: 4px; min-height: 54px; box-sizing: border-box;
+        padding: 0 24px; text-align: left !important;
+    }
+    .footer__text { font-size: 12px; line-height: 1.3; margin: 0; text-align: left !important; }
+
+    /* ---------- Страница «Отзывы»: карусель со свайпом и стрелками ---------- */
+    .rv-container { padding: 0 24px 40px; }
+    .rv-title { font-size: 20px; line-height: 1.3; margin: 14px 0 12px; text-align: center; }
+    .rv-intro { font-size: 15px; line-height: 1.45; margin: 0 0 22px; }
+
+    .rv-grid {
+        position: relative;
+        display: flex;
+        grid-template-columns: none;
+        align-items: stretch;
+        gap: 14px;
+        margin: 0 -24px;                                  /* на всю ширину экрана */
+        padding: 6px calc((100vw - min(304px, 80vw)) / 2) 14px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        animation: rv-fade .7s ease .3s backwards;
+    }
+    .rv-grid::-webkit-scrollbar { display: none; }
+
+    .rv-card {
+        flex: 0 0 min(304px, 80vw);
+        scroll-snap-align: center;
+        scroll-snap-stop: always;
+        max-height: 70vh;
+        max-height: min(70svh, 600px);
+        padding: 24px 20px 18px;
+        border-radius: 18px;
+        background-color: rgba(10, 8, 8, .68);
+        border-color: rgba(255, 255, 255, .1);
+        animation: none;                                  /* отдельной анимации появления у карточек нет */
+        transition: transform .4s ease, opacity .4s ease, border-color .4s ease, box-shadow .4s ease;
+    }
+    .rv-card:hover { transform: none; box-shadow: none; }
+    .rv-card::before { height: 3px; }
+
+    /* Не текущие карточки чуть приглушены, текущая подсвечена */
+    .rv-grid.rv-js .rv-card:not(.is-active) { transform: scale(.94); opacity: .55; }
+    .rv-card.is-active {
+        border-color: rgba(255, 122, 47, .45);
+        box-shadow: 0 10px 30px rgba(224, 52, 31, .25);
+    }
+
+    /* Шапка карточки */
+    .rv-card__name { margin: 0 0 10px; padding-right: 46px; font-size: 19px; line-height: 1.25; }
+    .rv-card__role { margin: 0 0 16px; padding: 4px 12px; font-size: 12.5px; line-height: 1.35; }
+
+    /* Текст: если очень длинный — листается внутри карточки */
+    .rv-card__text {
+        flex: 1 1 auto;
+        min-height: 0;
+        overflow-y: auto;
+        padding-bottom: 26px;
+        -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 28px), transparent);
+        mask-image: linear-gradient(to bottom, #000 calc(100% - 28px), transparent);
+        scrollbar-width: none;
+    }
+    .rv-card__text::-webkit-scrollbar { display: none; }
+    .rv-card__text p {
+        margin: 0 0 12px;
+        font-size: 15px;
+        font-weight: 400;
+        line-height: 1.6;
+        color: rgba(255, 255, 255, .92);
+        text-align: left;
+        -webkit-hyphens: auto;
+        hyphens: auto;
+        overflow-wrap: break-word;
+    }
+
+    /* ---------- Разные звёздочки на каждом отзыве ---------- */
+    .rv-card::after {
+        top: 16px; right: 16px;
+        width: 34px; height: 34px;
+        opacity: .9;
+        transform-origin: 50% 50%;
+        filter: drop-shadow(0 0 8px var(--sc, #ff7a2f));
+        transition: opacity .5s ease;
+    }
+    .rv-card:hover::after { opacity: .9; }
+    .rv-card:nth-child(5n + 1) { --sc: #ff7a2f; }
+    .rv-card:nth-child(5n + 1)::after {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='none' stroke='%23ff7a2f' stroke-width='4' stroke-linejoin='round' stroke-linecap='round'%3E%3Cpolygon points='50,4 61,38 96,38 68,59 79,93 50,72 21,93 32,59 4,38 39,38'/%3E%3C/svg%3E");
+    }
+    .rv-card:nth-child(5n + 2) { --sc: #ffa45e; }
+    .rv-card:nth-child(5n + 2)::after {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='none' stroke='%23ffa45e' stroke-width='4' stroke-linejoin='round' stroke-linecap='round'%3E%3Cpath d='M50 4C54 34 66 46 96 50C66 54 54 66 50 96C46 66 34 54 4 50C34 46 46 34 50 4Z'/%3E%3C/svg%3E");
+    }
+    .rv-card:nth-child(5n + 3) { --sc: #ffd08f; }
+    .rv-card:nth-child(5n + 3)::after {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='none' stroke='%23ffd08f' stroke-width='4' stroke-linejoin='round' stroke-linecap='round'%3E%3Cpolygon points='50,6 91,78 9,78'/%3E%3Cpolygon points='50,94 9,22 91,22'/%3E%3C/svg%3E");
+    }
+    .rv-card:nth-child(5n + 4) { --sc: #ff5a3c; }
+    .rv-card:nth-child(5n + 4)::after {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='none' stroke='%23ff5a3c' stroke-width='4' stroke-linejoin='round' stroke-linecap='round'%3E%3Cpolygon points='22,22 78,22 78,78 22,78'/%3E%3Cpolygon points='50,4 96,50 50,96 4,50'/%3E%3C/svg%3E");
+    }
+    .rv-card:nth-child(5n + 5) { --sc: #ffb27a; }
+    .rv-card:nth-child(5n + 5)::after {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='none' stroke='%23ffb27a' stroke-width='4' stroke-linejoin='round' stroke-linecap='round'%3E%3Cpath d='M50 6V94M12 28L88 72M12 72L88 28'/%3E%3C/svg%3E");
+    }
+    .rv-grid.rv-js .rv-card:not(.is-active)::after { opacity: .3; }
+
+    /* Анимация проигрывается один раз, когда отзыв становится текущим, и звезда замирает */
+    .rv-card.is-active:nth-child(5n + 1)::after { animation: rv-s-spin 4s cubic-bezier(.45, 0, .25, 1) .3s 1 backwards; }
+    .rv-card.is-active:nth-child(5n + 2)::after { animation: rv-s-pulse 3.4s cubic-bezier(.45, 0, .25, 1) .3s 1 backwards; }
+    .rv-card.is-active:nth-child(5n + 3)::after { animation: rv-s-spin-rev 4s cubic-bezier(.45, 0, .25, 1) .3s 1 backwards; }
+    .rv-card.is-active:nth-child(5n + 4)::after { animation: rv-s-flip 3.8s cubic-bezier(.45, 0, .25, 1) .3s 1 backwards; }
+    .rv-card.is-active:nth-child(5n)::after     { animation: rv-s-twinkle 3.4s cubic-bezier(.45, 0, .25, 1) .3s 1 backwards; }
+
+    @keyframes rv-s-spin     { from { transform: rotate(0); } to { transform: rotate(360deg); } }
+    @keyframes rv-s-spin-rev { from { transform: rotate(0); } to { transform: rotate(-360deg); } }
+    @keyframes rv-s-pulse    { 0% { transform: rotate(0) scale(1); } 50% { transform: rotate(45deg) scale(1.18); } 100% { transform: rotate(90deg) scale(1); } }
+    @keyframes rv-s-flip     { 0% { transform: rotate(0) scale(1); } 50% { transform: rotate(180deg) scale(1.15); } 100% { transform: rotate(360deg) scale(1); } }
+    @keyframes rv-s-twinkle  { 0% { transform: rotate(0) scale(1); } 50% { transform: rotate(60deg) scale(1.2); } 100% { transform: rotate(120deg) scale(1); } }
+
+    /* ---------- Стрелки и точки ---------- */
+    .rv-nav {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 18px;
+        margin-top: 10px;
+    }
+    .rv-arrow {
+        flex: none;
+        display: flex; align-items: center; justify-content: center;
+        width: 46px; height: 46px;
+        padding: 0;
+        color: #fff;
+        background: rgba(255, 255, 255, .08);
+        border: 1px solid rgba(255, 255, 255, .25);
+        border-radius: 50%;
+        -webkit-backdrop-filter: blur(8px);
+        backdrop-filter: blur(8px);
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+        transition: background-color .2s ease, transform .2s ease, opacity .2s ease, border-color .2s ease;
+    }
+    .rv-arrow svg { width: 20px; height: 20px; }
+    .rv-arrow:active { transform: scale(.9); background: rgba(255, 122, 47, .35); border-color: rgba(255, 122, 47, .7); }
+    .rv-arrow:disabled { opacity: .3; pointer-events: none; }
+
+    .rv-dots { display: flex; align-items: center; gap: 7px; }
+    .rv-dot {
+        width: 7px; height: 7px;
+        padding: 0;
+        background: rgba(255, 255, 255, .3);
+        border: 0;
+        border-radius: 4px;
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+        transition: width .3s ease, background-color .3s ease;
+    }
+    .rv-dot.is-active { width: 22px; background: #ff7a2f; }
+
+    /* ---------- Страница «Контакты» ---------- */
+    .ct-container { padding: 0 24px 40px; }
+    .ct-title { font-size: 20px; line-height: 1.3; margin: 14px 0 12px; text-align: center; }
+
+    .ct-main { flex-direction: column; align-items: stretch; gap: 24px; }
+    .ct-photo {
+        width: 100%; max-width: none;
+        height: auto;
+        aspect-ratio: 342 / 222;
+        object-fit: cover;
+        border-radius: 10px;
+    }
+
+    .ct-methods { width: 100%; gap: 20px; justify-content: flex-start; }
+
+    /* QR слева, текст справа, подпись — внизу справа, на уровне низа QR */
+    .ct-method { flex-direction: row; align-items: flex-start; gap: 16px; text-align: left; }
+    .ct-qr { position: relative; width: 120px; }
+    .ct-qr:hover { transform: none; }
+    .ct-qr__img { width: 120px; height: 120px; border-radius: 10px; }
+    .ct-qr__caption {
+        position: absolute;
+        left: calc(100% + 16px);
+        bottom: 0;                                   /* по нижнему краю QR */
+        display: flex;
+        align-items: center;                         /* текст строго по центру плашки по вертикали */
+        justify-content: center;                     /* и по горизонтали */
+        width: 142px;                                /* компактная плашка */
+        height: 24px;                                /* фиксированная высота — ровная «таблетка» */
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0 8px;
+        white-space: nowrap;
+        font-size: 12px;
+        font-weight: 300;
+        line-height: 1;
+        text-align: center;
+        transform: none;
+    }
+
+    .ct-method__text { height: 120px; justify-content: flex-start; gap: 14px; }
+    .ct-text { font-size: 13px; line-height: 1.2; margin: 0; text-align: left; }
+
+    /* Плашка с вопросом */
+    .ct-note {
+        flex-direction: row;
+        align-items: center;
+        gap: 14px;
+        box-sizing: border-box;
+        width: 100%;
+        height: auto;                                /* высота по тексту, ничего не обрезается */
+        min-height: 86px;
+        margin-top: 22px;
+        padding: 14px;
+        text-align: left;
+    }
+    .ct-note__icon { height: 50px; align-self: center; }
+    .ct-note__text {
+        flex: 1;
+        min-width: 0;
+        font-size: 13px;
+        line-height: 1.35;
+        text-align: left;
+        text-wrap: pretty;                           /* без висячих слов в конце строк */
+        -webkit-hyphens: auto;
+        hyphens: auto;
+        overflow-wrap: break-word;
+    }
+
+    /* ---------- Страница «Купить» ---------- */
+    /* Порядок на мобиле: игра (фото-кнопка) → камни (фото-кнопка) → описание камней → QR → оплата/доставка/опт.
+       Обёртки «растворяем» (display: contents), а порядок задаём через order в сетке. */
+    .by-container {
+        display: grid;
+        grid-template-columns: 120px minmax(0, 1fr);
+        column-gap: 16px;
+        align-content: start;
+        padding: 0 24px 40px;
+        --by-photo-h: calc((100vw - 48px) * 250 / 342);
+    }
+    .by-row, .by-col, .by-stone-body { display: contents; }
+
+    .by-title { grid-column: 1 / -1; font-size: 20px; line-height: 1.3; margin: 14px 0 12px; text-align: center; }
+
+    /* Фото — кнопки: сверху фото, поверх его низа плашка с названием и ценой */
+    .by-photo, .by-photo--main {
+        grid-column: 1 / -1;
+        flex: none;
+        width: 100%; min-width: 0; height: auto;
+        aspect-ratio: 342 / 250;
+        object-fit: cover;
+        border-radius: 10px;
+    }
+    .by-photo--main { order: 1; }
+    .by-row--second .by-photo { order: 3; margin-top: 28px; }
+
+    .by-price {
+        grid-column: 1 / -1;
+        position: relative; z-index: 1;
+        justify-content: space-between;
+        gap: 12px;
+        height: 72px;
+        margin: -72px 0 0;
+        padding: 0 16px;
+        background: linear-gradient(to top, rgba(0, 0, 0, .7), rgba(0, 0, 0, 0));
+        border-radius: 0 0 10px 10px;
+        -webkit-tap-highlight-color: transparent;
+    }
+    .by-col--order > .by-buy { order: 2; }
+    .by-stone-price { order: 4; width: auto; max-width: none; }
+    .by-buy:hover { transform: none; }
+
+    /* Кликабельным делаем всё фото целиком, а не только плашку */
+    .by-buy::before {
+        content: "";
+        position: absolute;
+        left: 0; right: 0; bottom: 0;
+        height: var(--by-photo-h);
+    }
+
+    .by-price__label { display: block; font-size: 20px; font-weight: 700; line-height: 1.2; }
+    .by-price__value { font-size: 20px; line-height: 1.2; }
+    .by-stone-price__note, .by-stone-title, .by-star { display: none; }
+
+    /* Тексты */
+    .by-text, .by-list li { font-size: 14px; line-height: 1.35; text-shadow: none; }
+    .by-stone-body .by-text { grid-column: 1 / -1; order: 5; margin: 12px 0 0; }
+    .by-m-note { display: block; margin-top: 12px; }
+
+    /* QR слева, текст справа, подпись — внизу справа, на уровне низа QR */
+    .by-qr-row { grid-column: 1; order: 6; display: block; margin-top: 24px; }
+    .by-col--order > .by-text { grid-column: 2; order: 7; align-self: start; margin-top: 24px; }
+
+    .by-qr { position: relative; width: 120px; }
+    .by-qr:hover { transform: none; }
+    .by-qr__img { width: 120px; height: 120px; border-radius: 10px; }
+    .by-qr__caption {
+        position: absolute;
+        left: calc(100% + 16px);
+        bottom: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 142px;
+        height: 24px;
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0 8px;
+        white-space: nowrap;
+        font-size: 12px;
+        font-weight: 300;
+        line-height: 1;
+        text-align: center;
+    }
+
+    /* Оплата / Доставка / Оптовые заказы */
+    .by-info { grid-column: 1 / -1; order: 8; margin-top: 32px; text-shadow: none; }
+    .by-info__section { margin-bottom: 26px; }
+    .by-info__title { font-size: 20px; line-height: 1.3; margin: 0 0 10px; text-align: center; }
+    .by-info__section .by-text { margin-bottom: 12px; }
+    .by-info__section .by-text:last-child { margin-bottom: 0; }
+    .by-list { margin: 0 0 12px; }
+    .by-list li { padding-left: 24px; }
+    .by-list li::before { left: 8px; }
+}
