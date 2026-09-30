@@ -224,14 +224,19 @@
 
     .home-kit { padding: 20px 0 24px; }
 
+    /* Убираем затемнение под жанрами, QR-кодами и текстом */
+    .home-dark { background: none !important; }
+
     /* Жанры: 5 в ряд (2 строки), кружки одного размера. По нажатию — увеличиваются и подсвечиваются */
-    .home-genres { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; row-gap: 18px; padding-top: 28px; justify-items: stretch; }
+    .home-genres { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 4px; row-gap: 24px; padding-top: 28px; justify-items: stretch; }
     .home-genres > * { grid-column: auto !important; grid-row: auto !important; }
     .home-genres__item {
+        position: relative;
         cursor: pointer;
         -webkit-tap-highlight-color: transparent;
         -webkit-touch-callout: none;
         user-select: none;
+        min-width: 0;
         transition: transform .3s ease;
     }
     .home-genres__img {
@@ -239,23 +244,42 @@
         height: auto; aspect-ratio: 1 / 1;
         object-fit: cover;
         border-radius: 50%;
-        transition: box-shadow .3s ease;
+        position: relative; z-index: 1;
+        transition: transform .3s ease;
     }
-    .home-genres__name { margin-top: 6px; font-size: 11px; font-weight: 700; text-align: center; }
+    /* Свечение — готовый слой под кружком, включается только через opacity (дёшево для GPU) */
+    .home-genres__item::before {
+        content: "";
+        position: absolute; top: 0; left: 50%;
+        width: min(100%, 62px); aspect-ratio: 1 / 1;
+        transform: translateX(-50%);
+        border-radius: 50%;
+        box-shadow: 0 0 16px 3px var(--glow, transparent);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity .25s ease, transform .3s ease;
+    }
+    .home-genres__item:nth-child(9)::before { box-shadow: -8px 0 16px 1px #3FA53F, 8px 0 16px 1px #E03F1F; }
+    .home-genres .home-genres__item.is-active::before { opacity: 1; }
+    .home-genres__name {
+        display: block; width: 100%; margin-top: 6px;
+        font-size: 9.5px; font-weight: 700; line-height: 1.2; text-align: center;
+        overflow-wrap: anywhere; word-break: normal;
+        -webkit-hyphens: auto; hyphens: auto;
+    }
 
     /* Убираем «залипающий» :hover с десктопной версии — на телефоне работает только нажатие */
     .home-genres .home-genres__item:hover,
     .home-genres .home-genres__item:hover + .home-genres__item,
     .home-genres .home-genres__item:has(+ .home-genres__item:hover),
     .home-genres:has(.home-genres__item:hover) .home-genres__item:not(:hover) { transform: none; }
-    .home-genres .home-genres__item:not(.is-active):hover .home-genres__img { box-shadow: none; }
+    .home-genres .home-genres__item .home-genres__img { box-shadow: none !important; }
 
     /* Нажатый жанр: чуть больше + подсветка своим цветом */
-    .home-genres .home-genres__item.is-active { transform: scale(1.2) !important; position: relative; z-index: 1; }
-    .home-genres .home-genres__item.is-active .home-genres__img { box-shadow: 0 0 18px 3px var(--glow); }
-    .home-genres .home-genres__item:nth-child(9).is-active .home-genres__img {
-        box-shadow: -8px 0 18px 1px #3FA53F, 8px 0 18px 1px #E03F1F;
-    }
+    /* Увеличивается только кружок (не весь пункт), чтобы подписи не наезжали друг на друга */
+    .home-genres .home-genres__item.is-active { position: relative; z-index: 1; }
+    .home-genres .home-genres__item.is-active .home-genres__img { transform: scale(1.2); }
+    .home-genres .home-genres__item.is-active::before { transform: translateX(-50%) scale(1.2); }
 
     /* Варианты игры */
     .home-modes-section { padding-top: 36px; }
@@ -291,20 +315,20 @@
     .home-rules-text { max-width: 342px; margin-top: 20px; font-size: 14px; line-height: 17.5px; }
 
     /* Telegram: картинка слева 120x120, текст справа 200 */
-    .home-tg { flex-direction: row; align-items: flex-start; gap: 18px; margin-top: 22px; padding-bottom: 32px; }
+    .home-tg { flex-direction: row; align-items: flex-start; gap: 18px; margin-top: 22px; padding-bottom: 12px; }
     .home-tg .home-text { flex: none; width: 200px; margin: 0; font-size: 12px; line-height: 17.5px; }
 
-    /* Футер: ниже и левее */
-    .footer { min-height: 92px; margin-top: 24px; }
+    /* Футер: высота только по тексту */
+    .footer { height: auto; min-height: 0; margin-top: 0; }
     .footer__container {
-        flex-direction: column; align-items: flex-start; justify-content: flex-end;
-        gap: 4px; min-height: 92px; box-sizing: border-box;
-        padding: 0 16px 18px; text-align: left !important;
+        flex-direction: column; align-items: flex-start; justify-content: center;
+        gap: 2px; height: auto; min-height: 0; box-sizing: border-box;
+        padding: 12px 16px; text-align: left !important;
     }
     .footer__text { font-size: 12px; line-height: 1.3; margin: 0; padding-left: 0 !important; text-align: left !important; }
 
     /* ---------- Страница «Отзывы»: карусель со свайпом и стрелками ---------- */
-    .rv-container { padding: 0 24px 40px; }
+    .rv-container { padding: 0 24px 12px; }
     .rv-title { font-size: 20px; line-height: 1.3; margin: 14px 0 12px; text-align: center; }
     .rv-intro { font-size: 15px; line-height: 1.45; margin: 0 0 22px; }
 
@@ -461,7 +485,7 @@
     .rv-dot.is-active { width: 22px; background: #ff7a2f; }
 
     /* ---------- Страница «Контакты» ---------- */
-    .ct-container { padding: 0 24px 40px; }
+    .ct-container { padding: 0 24px 12px; }
     .ct-title { font-size: 20px; line-height: 1.3; margin: 14px 0 12px; text-align: center; }
 
     .ct-main { flex-direction: column; align-items: stretch; gap: 24px; }
@@ -537,7 +561,7 @@
         grid-template-columns: 120px minmax(0, 1fr);
         column-gap: 16px;
         align-content: start;
-        padding: 0 24px 40px;
+        padding: 0 24px 12px;
         --by-photo-h: calc((100vw - 48px) * 250 / 342);
     }
     .by-row, .by-col, .by-stone-body { display: contents; }
@@ -610,7 +634,7 @@
         padding: 0 8px;
         white-space: nowrap;
         font-size: 12px;
-        font-weight: 300;
+        font-weight: 300;ф
         line-height: 1;
         text-align: center;
     }
