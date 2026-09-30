@@ -337,3 +337,16 @@
 
     d.classList.add('mm-ready');
 })();
+
+/* Главная: жанры — нажатие увеличивает кружок и включает подсветку (только мобильная версия) */
+(function () {
+    var mqm = window.matchMedia('(max-width: 768px)');
+    document.addEventListener('click', function (e) {
+        if (!mqm.matches) return;
+        var item = e.target.closest && e.target.closest('.home-genres__item');
+        Array.prototype.forEach.call(document.querySelectorAll('.home-genres__item.is-active'), function (x) {
+            if (x !== item) x.classList.remove('is-active');
+        });
+        if (item) item.classList.toggle('is-active');
+    });
+})();
