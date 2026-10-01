@@ -208,7 +208,13 @@
                 var sc = document.createElement('script');
                 Array.prototype.slice.call(old.attributes).forEach(function (at) { sc.setAttribute(at.name, at.value); });
                 sc.async = false;
-                if (!old.src) sc.textContent = old.textContent;
+                if (!old.src) {
+                    var t = (old.getAttribute('type') || '').toLowerCase();
+                    var isJs = !t || t === 'text/javascript' || t === 'application/javascript';
+                    /* в блоке { } повторные let/const/class не конфликтуют с уже объявленными
+                       на предыдущей странице (иначе: "Identifier ... has already been declared") */
+                    sc.textContent = isJs ? '{\n' + old.textContent + '\n}' : old.textContent;
+                }
                 document.body.appendChild(sc);
             });
 
