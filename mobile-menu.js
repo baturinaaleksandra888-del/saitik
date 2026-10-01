@@ -124,6 +124,7 @@
     });
     mm.appendChild(top);
     mm.appendChild(ul);
+    mm.inert = true;
     document.body.appendChild(mm);
 
     /* Летящие звёздочки */
@@ -318,9 +319,12 @@
     window.addEventListener('resize', function () { if (rvState) rvState.update(); });
 
     function setOpen(open) {
+        /* при закрытии убираем фокус из меню до aria-hidden, иначе браузер ругается */
+        if (!open && mm.contains(document.activeElement)) document.activeElement.blur();
         d.classList.toggle('mm-open', open);
         burger.setAttribute('aria-expanded', open ? 'true' : 'false');
         mm.setAttribute('aria-hidden', open ? 'false' : 'true');
+        mm.inert = !open; /* закрытое меню не получает фокус с клавиатуры */
         if (open) closeBtn.focus({ preventScroll: true });
     }
 
